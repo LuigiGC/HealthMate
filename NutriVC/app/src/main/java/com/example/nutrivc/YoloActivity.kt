@@ -1,52 +1,60 @@
-import org.tensorflow.lite.Interpreter
-import java.nio.MappedByteBuffer
-import java.nio.channels.FileChannel
-import android.content.res.AssetFileDescriptor
-import android.content.res.AssetManager
-import java.io.FileInputStream
-import java.io.IOException
+package com.example.nutrivc
+
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
+import android.os.Bundle
+import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import com.example.nutrivc.R
+import com.example.nutrivc.ml.Yolo11nFloat32
+import org.tensorflow.lite.support.image.TensorImage
+import java.io.FileNotFoundException
+import java.io.InputStream
 
 class YoloActivity : AppCompatActivity() {
 
-    private lateinit var interpreter: Interpreter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_yolo)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
+        // Obtém a URI da imagem a partir da Intent
         val imageView: ImageView = findViewById(R.id.imageView)
         val imageUri = intent.getStringExtra("imageUri")?.let { Uri.parse(it) }
         imageView.setImageURI(imageUri)
 
-        // Carregar o modelo TensorFlow Lite
-        interpreter = Interpreter(loadModelFile(assetManager, "yolo.tflite"))
-
-        // Processar a imagem e realizar a detecção
+        // Processa a imagem se a URI não for nula
         imageUri?.let {
-            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, it)
-            val results = detectFood(bitmap)
-            // Exibir os resultados na interface do usuário
+            processImage(it)
         }
     }
 
-    @Throws(IOException::class)
-    private fun loadModelFile(assetManager: AssetManager, modelPath: String): MappedByteBuffer {
-        val fileDescriptor: AssetFileDescriptor = assetManager.openFd(modelPath)
-        val inputStream = FileInputStream(fileDescriptor.fileDescriptor)
-        val fileChannel: FileChannel = inputStream.channel
-        val startOffset: Long = fileDescriptor.startOffset
-        val declaredLength: Long = fileDescriptor.declaredLength
-        return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength)
-    }
+    private fun processImage(imageUri: Uri) {
+        try {
+            // Abre o InputStream da imagem usando a URI
+            val inputStream: InputStream? = contentResolver.openInputStream(imageUri)
+            val bitmap = BitmapFactory.decodeStream(inputStream)
 
-    private fun detectFood(bitmap: Bitmap): List<DetectionResult> {
-        // Implementar a lógica de detecção usando o modelo YOLO
-        // ...
+            // Inicializa o modelo YOLO e cria um TensorImage a partir do Bitmap
+            val model = Yolo11nFloat32.newInstance(this)
+            val image = TensorImage.fromBitmap(bitmap)
+
+            // Executa a inferência no modelo e obtém o resultado
+            val outputs = model.process(image)
+            val output = outputs.outputAsCategoryList
+
+            // Libera os recursos do modelo
+            model.close()
+        } catch (e: FileNotFoundException) {
+            e.printStackTrace()
+        }
     }
 }
