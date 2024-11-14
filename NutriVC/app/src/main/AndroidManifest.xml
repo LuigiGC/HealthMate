@@ -13,23 +13,40 @@
         android:theme="@style/Theme.NutriVC"
         tools:targetApi="31">
         <activity
+            android:name=".YoloActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ImageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ScanActivity"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"> <!-- Necessário para Activities de Launcher -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- Activity do Histórico de Refeições -->
+        </activity> <!-- Activity do Histórico de Refeições -->
         <activity
             android:name=".HistoryActivity"
             android:exported="false" /> <!-- Não precisa ser acessível por outros apps -->
-
         <!-- Activity do Perfil do Usuário -->
         <activity
             android:name=".ProfileActivity"
             android:exported="false" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.nutrivc.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>
