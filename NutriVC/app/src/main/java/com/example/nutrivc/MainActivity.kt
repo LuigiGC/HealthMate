@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
         val btEscanear: Button = findViewById(R.id.bt_Escanear)
         val tvHistory: Button = findViewById(R.id.tv_history)
         val ibtProfile: ImageButton = findViewById(R.id.ibt_profile)
+        val bt_alimentos_registrados: Button = findViewById(R.id.bt_alimentos_registrados)
 
         btEscanear.setOnClickListener {
             // Adicione a funcionalidade desejada aqui
@@ -34,5 +35,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
+        bt_alimentos_registrados.setOnClickListener {
+            val intent = Intent(this, AlimentosRegistradosActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 }

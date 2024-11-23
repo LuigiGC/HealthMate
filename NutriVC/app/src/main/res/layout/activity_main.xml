@@ -44,6 +44,16 @@
             android:text="Histórico"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
+        <Button
+            android:id="@+id/bt_alimentos_registrados"
+            android:layout_width="146dp"
+            android:layout_height="82dp"
+            android:layout_below="@id/tv_history"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:text="Alimentos Registrados"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
