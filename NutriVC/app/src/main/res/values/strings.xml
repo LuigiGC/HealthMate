@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">HealthMate</string>
+    <string-array name="refeicoes_array">
+        <item>Café da Manhã</item>
+        <item>Almoço</item>
+        <item>Lanche</item>
+        <item>Janta</item>
+    </string-array>
 </resources>

@@ -72,6 +72,10 @@ class YoloActivity : AppCompatActivity() {
                         println("Objeto: ${box.clsName}, Confiança: ${box.cnf}")
                     }
                     overlayView.setResults(boundingBoxes)
+
+                    val intent = Intent(this@YoloActivity, ResultadoActivity::class.java)
+                    intent.putParcelableArrayListExtra("detectedObjects", ArrayList(detectedObjects))
+                    startActivity(intent)
                 }
             }) { message ->
                 println(message)

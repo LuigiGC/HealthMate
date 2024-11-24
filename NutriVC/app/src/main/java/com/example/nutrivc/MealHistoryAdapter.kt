@@ -1,18 +1,16 @@
 package com.example.nutrivc
 
+import Meal
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class MealHistoryAdapter(private val mealList: List<Meal>) : RecyclerView.Adapter<MealHistoryAdapter.MealViewHolder>() {
-
-    inner class MealViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val mealName: TextView = view.findViewById(R.id.tv_meal_name)
-        val mealTime: TextView = view.findViewById(R.id.tv_meal_time)
-        val mealCalories: TextView = view.findViewById(R.id.tv_meal_calories)
-    }
+class MealHistoryAdapter(
+    private val meals: List<Meal>,
+    private val onClick: (Meal) -> Unit
+) : RecyclerView.Adapter<MealHistoryAdapter.MealViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_meal, parent, false)
@@ -20,11 +18,18 @@ class MealHistoryAdapter(private val mealList: List<Meal>) : RecyclerView.Adapte
     }
 
     override fun onBindViewHolder(holder: MealViewHolder, position: Int) {
-        val meal = mealList[position]
-        holder.mealName.text = meal.name
-        holder.mealTime.text = meal.time
-        holder.mealCalories.text = meal.calories
+        val meal = meals[position]
+        holder.nomeTextView.text = meal.nome
+        holder.horarioTextView.text = meal.horario
+        holder.caloriasTextView.text = meal.calorias
+        holder.itemView.setOnClickListener { onClick(meal) }
     }
 
-    override fun getItemCount() = mealList.size
+    override fun getItemCount(): Int = meals.size
+
+    class MealViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val nomeTextView: TextView = itemView.findViewById(R.id.tv_meal_name)
+        val horarioTextView: TextView = itemView.findViewById(R.id.tv_meal_time)
+        val caloriasTextView: TextView = itemView.findViewById(R.id.tv_meal_calories)
+    }
 }

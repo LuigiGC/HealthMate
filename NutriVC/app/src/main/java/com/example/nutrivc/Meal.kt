@@ -1,7 +1,5 @@
-package com.example.nutrivc
-
 data class Meal(
-    val name: String,
-    val time: String,
-    val calories: String,
+    val nome: String,
+    val horario: String,
+    val calorias: String
 )

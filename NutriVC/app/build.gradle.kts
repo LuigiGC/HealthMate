@@ -11,8 +11,8 @@ android {
         applicationId = "com.example.nutrivc"
         minSdk = 30
         targetSdk = 34
-        versionCode = 2
-        versionName = "2.0.1"
+        versionCode = 3
+        versionName = "3.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -40,15 +40,17 @@ android {
 }
 
 dependencies {
+
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.material)
+    implementation(libs.androidx.recyclerview)
 
 
-
-    // GPU delegate (opcional, remova se não for necessário)
     implementation(libs.litert.gpu)
     implementation(libs.litert.gpu.api) {
         exclude(group = "com.google.ai.edge.litert", module = "litert-api")
@@ -61,4 +63,5 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
 }

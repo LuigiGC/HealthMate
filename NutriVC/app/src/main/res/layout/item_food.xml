@@ -6,21 +6,21 @@
     android:padding="8dp">
 
     <TextView
-        android:id="@+id/tv_meal_name"
+        android:id="@+id/tv_food_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nome da Refeição"
+        android:text="Nome do Alimento"
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/tv_meal_time"
+        android:id="@+id/tv_food_quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Horário"
+        android:text="Quantidade"
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/tv_meal_calories"
+        android:id="@+id/tv_food_calories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Calorias"
